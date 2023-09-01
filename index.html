@@ -26,9 +26,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.used) {
-                    document.getElementById("mensagem").innerText = "Código já utilizado.";
-                } else if (data.valid) {
+                if (data.valid) {
                     document.getElementById("mensagem").innerText = "Código válido! Acesso concedido.";
                 } else {
                     document.getElementById("mensagem").innerText = "Código inválido.";
