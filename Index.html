@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Acesso com Código Único</title>
+</head>
+<body>
+    <h1>Insira o código para verificar o acesso</h1>
+    <form id="access-form">
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" name="codigo">
+        <button type="button" onclick="verificarCodigo()">Verificar</button>
+    </form>
+
+    <div id="mensagem"></div>
+
+    <script>
+        function verificarCodigo() {
+            var codigoDigitado = document.getElementById("codigo").value;
+
+            fetch("verificar_codigo.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "codigo=" + encodeURIComponent(codigoDigitado),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.used) {
+                    document.getElementById("mensagem").innerText = "Código já utilizado.";
+                } else if (data.valid) {
+                    document.getElementById("mensagem").innerText = "Código válido! Acesso concedido.";
+                } else {
+                    document.getElementById("mensagem").innerText = "Código inválido.";
+                }
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+            });
+        }
+    </script>
+</body>
+</html>
